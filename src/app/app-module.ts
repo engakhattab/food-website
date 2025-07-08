@@ -5,16 +5,20 @@ import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 import { Header } from './components/header/header';
 import { Home } from './components/home/home';
+import { Search } from './components/search/search';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     App,
     Header,
-    Home
+    Home,
+    Search
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [
     provideBrowserGlobalErrorListeners()
