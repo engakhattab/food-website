@@ -8,12 +8,24 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrl: './search.css'
 })
 export class Search {
-  @Output()
-  searchTextChanged = new EventEmitter<string>();
+  searchTerm = '';
 
-  // This method is called every time the text in the input box changes.
-  doSearch(searchTerm: string) {
-    this.searchTextChanged.emit(searchTerm);
+  constructor(private route: ActivatedRoute, private router: Router) {}
+
+  ngOnInit(): void {
+    // This will set the search term in the box if it's already in the URL
+    this.route.params.subscribe(params => {
+      if (params['searchTerm']) {
+        this.searchTerm = params['searchTerm'];
+      }
+    });
+  }
+
+  // This method now navigates to the search URL when the button is clicked
+  doSearch(): void {
+    if (this.searchTerm) {
+      this.router.navigateByUrl('/search/' + this.searchTerm);
+    }
   }
 
 }

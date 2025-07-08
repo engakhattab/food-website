@@ -12,21 +12,24 @@ import { ActivatedRoute } from '@angular/router';
 export class Home implements OnInit {
   allFoods: Food[] = [];
   foods:Food[] =[];
-  constructor(private foodService: FoodService, private route:ActivatedRoute) { }
-  ngOnInit() : void {
-    this.allFoods = this.foodService.getAll();
-    this.foods = this.allFoods;
-  }
-   handleSearch(searchTerm: string) {
-    if (searchTerm) {
-      // Filter the original list and update the displayed list.
-      this.foods = this.allFoods.filter(food =>
-        food.name.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    } else {
-      // If the search box is empty, show all foods again.
-      this.foods = this.allFoods;
-    }
-  }
 
-}
+  constructor(private foodService: FoodService, private route:ActivatedRoute) { }
+ ngOnInit(): void {
+    // This single subscription handles all filtering logic based on the URL
+    this.route.params.subscribe(params => {
+      if (params['searchTerm']) {
+        // Filter by search term
+        this.foods = this.foodService.getAll().filter(food =>
+          food.name.toLowerCase().includes(params['searchTerm'].toLowerCase())
+        );
+      } else if (params['tag']) {
+        // Filter by tag
+        this.foods = this.foodService.getAllFoodsByTag(params['tag']);
+      }
+      else {
+        // No filter, show all foods
+        this.foods = this.foodService.getAll();
+      }
+    });
+  }
+  }

@@ -1,9 +1,18 @@
-<div>
+<!-- <div>
   <input
     type="text"
     placeholder="Search Food Mine!"
     #searchInput
     > 
-    <!-- (keyup)="onSearchTextChanged(searchInput.value)" -->
-    <button (click)="doSearch(searchInput.value)">Search</button>
+     (keyup)="onSearchTextChanged(searchInput.value)" -->
+    <!-- <button (click)="doSearch(searchInput.value)">Search</button> -->
+<!-- </div> --> 
+
+<div>
+  <input
+    type="text"
+    placeholder="Search Food Mine!"
+    [(ngModel)]="searchTerm"
+    (keyup.enter)="doSearch()">
+  <button (click)="doSearch()">Search</button>
 </div>
